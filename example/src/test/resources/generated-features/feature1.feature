@@ -1,4 +1,3 @@
-
 @withA
 @withB
 Feature: Feature 1
@@ -9,11 +8,12 @@ Feature: Feature 1
     Then step 3
 
   Scenario: with extra Scenario for A
-    Given step 1
-    When step 2
-    Then step 3
+      Given step 1
+      When step 2
+      Then step 3
 
   Scenario: with extra Scenario for B
-    Given step 1
-    When step 2
-    Then step 3
+      Given step 1
+      When step 2
+      Then step 3
+
