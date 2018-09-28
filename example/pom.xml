@@ -42,9 +42,12 @@
             <param>src/test/resources/cucumber/feature1.feature</param>
             <param>src/test/resources/cucumber/feature2.feature</param>
             <param>src/test/resources/cucumber/feature3.feature</param>
+            <param>src/test/resources/cucumber/ArrayList.feature</param>
+            <param>src/test/resources/cucumber/LinkedList.feature</param>
+            <param>src/test/resources/cucumber/HashSet.feature</param>
           </coreFeatureFiles>
           <extraFeatureFiles>
-            <param>src/test/resources/extensions/withExtra.feature</param>
+            <param>src/test/resources/extensions/Collection.feature</param>
             <param>src/test/resources/extensions/withA.feature</param>
             <param>src/test/resources/extensions/withB.feature</param>
           </extraFeatureFiles>
