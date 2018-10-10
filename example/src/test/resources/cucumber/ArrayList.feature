@@ -5,6 +5,34 @@ Feature: How an array list functioned
     Given an array list
 
   Scenario: some array list scenario
-    Given step 1
+    Given doc string
+    """
+    {
+      "text": "new note",
+      "createdBy": {
+        "id": "12345",
+        "type": "PERSONNEL"
+      }
+    }
+     """
+    When step 2
+      |a|b |
+      |1|b |
+      |1|b |
+      |2|b |
+    Then step 3
+
+  Scenario Outline: asdf
+    Given step <a>
     When step 2
     Then step 3
+    @asdf
+    Examples: d
+      |a|b |
+      |1|b |
+      |1|b |
+      |2|b |
+    @a
+    Examples: f
+      |a|
+      |1|
