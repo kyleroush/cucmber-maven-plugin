@@ -1,6 +1,6 @@
-Feature: How an array list functioned
+Feature: extra scenarios
 
-      Scenario: with extra Scenario2
+      Scenario: scenarios from the extra scenarios
       Given step 1
       When step 2
       Then step 3

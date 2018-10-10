@@ -1,20 +1,12 @@
 @List
 @Collection
 Feature: How an array list functioned
+
   Background:
     Given an array list
 
   Scenario: some array list scenario
     Given doc string
-    """
-    {
-      "text": "new note",
-      "createdBy": {
-        "id": "12345",
-        "type": "PERSONNEL"
-      }
-    }
-     """
     When step 2
       |a|b |
       |1|b |
@@ -26,6 +18,7 @@ Feature: How an array list functioned
     Given step <a>
     When step 2
     Then step 3
+
     @asdf
     Examples: d
       |a|b |
