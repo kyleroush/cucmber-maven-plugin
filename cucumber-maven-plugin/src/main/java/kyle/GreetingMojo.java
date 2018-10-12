@@ -2,21 +2,14 @@ package kyle;
 
 import io.cucumber.gherkin.Gherkin;
 import io.cucumber.messages.Messages;
-import io.cucumber.messages.Messages.Tag;
 import io.cucumber.messages.Messages.Wrapper;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.inject.Inject;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugins.annotations.Component;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 
@@ -48,8 +41,6 @@ public class GreetingMojo extends AbstractMojo {
             outputDirectory.mkdirs();
         }
 
-        //SetUp setUp = new SetUp();
-
         //map extraFeatureFiles
         Map<String, File> extraFiles = setUp.buildTagMap(extraFeatureFiles);
 
@@ -78,6 +69,4 @@ public class GreetingMojo extends AbstractMojo {
             }
         }
     }
-
-
 }
