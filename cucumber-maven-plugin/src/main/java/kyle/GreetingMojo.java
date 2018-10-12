@@ -1,19 +1,13 @@
 package kyle;
 
 import io.cucumber.gherkin.Gherkin;
-import io.cucumber.messages.Messages.Tag;
+import io.cucumber.messages.Messages;
 import io.cucumber.messages.Messages.Wrapper;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.inject.Inject;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
@@ -34,6 +28,13 @@ public class GreetingMojo extends AbstractMojo {
     @Parameter
     List<File> extraFeatureFiles;
 
+    @Inject
+    SetUp setUp;
+    @Inject
+    Writer writer;
+    @Inject
+    BuildFeatures buildFeatures;
+
     public void execute() throws MojoExecutionException {
 
         if (!outputDirectory.exists()) {
@@ -41,85 +42,31 @@ public class GreetingMojo extends AbstractMojo {
         }
 
         //map extraFeatureFiles
-        Map<String, File> extraFiles = buildTagMap(extraFeatureFiles);
+        Map<String, File> extraFiles = setUp.buildTagMap(extraFeatureFiles);
 
+        Map<String, Messages.Feature> extraFeatures = setUp.buildTagFeatureMap(extraFiles);
+
+        getLog().info(extraFeatures.keySet().toString());
 
         // if given a directory search it
-        List<String> fileNames = buildFeatureList(coreFeatureFiles);
+        List<String> fileNames = setUp.buildFeatureList(coreFeatureFiles);
+        getLog().info(fileNames.toString());
 
-        for (Wrapper wrapper: Gherkin.fromPaths(fileNames,  false, true, false)) {
-            getLog().info("name");
+        for (String name : fileNames) {
+            getLog().info("name "+name);
 
-            String uri = wrapper.getGherkinDocumentOrBuilder().getUri();
-            getLog().info(uri);
+            for (Wrapper wrapper : Gherkin.fromPaths(Collections.singletonList(name), false, true, false)) {
+                getLog().info("parsed");
 
-            getLog().info(uri.substring(uri.lastIndexOf('/')));
+                Messages.Feature feature = buildFeatures.buildFeatures(wrapper, extraFeatures);
 
-            File newFile = new File(outputDirectory, uri.substring(uri.lastIndexOf('/')));
+                String uri = wrapper.getGherkinDocumentOrBuilder().getUri();
+                getLog().info(uri);
+                getLog().info(uri.substring(uri.lastIndexOf('/')));
+                File newFile = new File(outputDirectory, uri.substring(uri.lastIndexOf('/')));
 
-            append(newFile, new File(wrapper.getGherkinDocumentOrBuilder().getUri()));
-
-            for(Tag tag: wrapper.getGherkinDocument().getFeature().getTagsList()) {
-                getLog().info(tag.getName().toString());
-                if (extraFiles.containsKey(tag.getName())) {
-                    getLog().info("found tag " +tag.getName());
-                    append(newFile, extraFiles.get(tag.getName()));
-
-                }
+                writer.write(feature, newFile);
             }
         }
     }
-
-
-
-    public void append(File fileToWriteTo, File fileToReadFrom) throws MojoExecutionException {
-        try(
-                FileWriter fw = new FileWriter(fileToWriteTo, true);
-                FileReader fr = new FileReader(fileToReadFrom)
-        ) {
-            int c = fr.read();
-            while(c!=-1) {
-                fw.write(c);
-                c = fr.read();
-            }
-            fw.write("\r\n");
-            //w.write(new File(wrapper.getGherkinDocumentOrBuilder().getUri()).rea);
-        }
-        catch (IOException e) {
-            throw new MojoExecutionException("Error creating file " + fileToWriteTo, e);
-        }
-    }
-
-
-    public Map<String, File> buildTagMap(List<File> files) {
-        Map<String, File> extraFiles = new HashMap<>();
-        for (File file: extraFeatureFiles) {
-
-            // build a key that would look like the annotation
-            // so instead someFeature.feature
-            // it would be @someFeature
-            String key = "@" + file.getName().replace(".feature", "");
-
-            extraFiles.put(key, file);
-        }
-        return extraFiles;
-    }
-
-    /**
-     * recusivily search the files provided to collect all the files locations from the nested directories.
-     * @param files
-     * @return
-     */
-    public List<String> buildFeatureList(List<File> files) {
-        List<String> fileNames = new ArrayList<>();
-        for(File file: coreFeatureFiles) {
-            if(file.isDirectory()) {
-                buildFeatureList(Arrays.asList(file.listFiles()));
-            } else {
-                fileNames.add(file.toString());
-            }
-        }
-        return fileNames;
-    }
-
 }
