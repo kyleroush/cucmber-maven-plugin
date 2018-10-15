@@ -1,4 +1,4 @@
-package kyle;
+package com.kyleroush.plugin.cucumber.generator;
 
 import io.cucumber.gherkin.Gherkin;
 import io.cucumber.messages.Messages;
