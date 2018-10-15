@@ -5,7 +5,7 @@
 
 
   <parent>
-    <groupId>kyle</groupId>
+    <groupId>com.kyleroush.plugin.cucumber.generator</groupId>
     <artifactId>cucumber-maven-plugin-parent</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
@@ -35,7 +35,7 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>kyle</groupId>
+        <groupId>com.kyleroush.plugin.cucumber.generator</groupId>
         <artifactId>cucumber-maven-plugin</artifactId>
         <configuration>
           <coreFeatureFiles>

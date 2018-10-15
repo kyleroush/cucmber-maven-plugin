@@ -1,4 +1,4 @@
-package kyle;
+package com.kyleroush.plugin.cucumber.generator;
 
 import io.cucumber.gherkin.Gherkin;
 import io.cucumber.messages.Messages;
@@ -42,7 +42,7 @@ public class SetUp {
   }
 
   /**
-   * recusivily search the files provided to collect all the files locations from the nested directories.
+   * recursively search the files provided to collect all the files locations from the nested directories.
    * @param files
    * @return
    */
