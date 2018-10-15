@@ -40,26 +40,17 @@
         <configuration>
           <coreFeatureFiles>
             <param>src/test/resources/cucumber</param>
-            <!--<param>src/test/resources/cucumber/feature2.feature</param>-->
-            <!--<param>src/test/resources/cucumber/feature3.feature</param>-->
-            <!--<param>src/test/resources/cucumber/ArrayList.feature</param>-->
-            <!--<param>src/test/resources/cucumber/LinkedList.feature</param>-->
-            <!--<param>src/test/resources/cucumber/HashSet.feature</param>-->
           </coreFeatureFiles>
           <extraFeatureFiles>
             <param>src/test/resources/extensions</param>
-
-            <!--<param>src/test/resources/extensions/Collection.feature</param>-->
-            <!--<param>src/test/resources/extensions/withA.feature</param>-->
-            <!--<param>src/test/resources/extensions/withB.feature</param>-->
           </extraFeatureFiles>
           <outputDirectory>${project.build.directory}/generated-features</outputDirectory>
         </configuration>
         <executions>
           <execution>
-            <id>copy-test-resources</id>
+            <id>generate-features</id>
             <goals>
-              <goal>sayhi</goal>
+              <goal>generate</goal>
             </goals>
             <phase>test-compile</phase>
           </execution>

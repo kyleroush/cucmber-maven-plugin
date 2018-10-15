@@ -5,10 +5,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Takes in a parent feature and a map of sub features and combine them to build a new feature.
+ */
 public class BuildFeatures {
 
-
-  public List<Messages.FeatureChild> newScenarios( List<Messages.FeatureChild> children) {
+  /**
+   * Gets all the scenarios from a feature and prepend the background of that feature so it is not lost
+   *
+   * @param children the children of a feature (the scenarios and background)
+   * @return the feature children that are generate with background included in the scenarios
+   */
+  private List<Messages.FeatureChild> newScenarios(List<Messages.FeatureChild> children) {
 
     Messages.Background background = null;
     for (Messages.FeatureChild child:children) {
@@ -19,7 +27,6 @@ public class BuildFeatures {
 
     if(background != null){
       List<Messages.FeatureChild> newChildren = new ArrayList<>();
-
 
       for (Messages.FeatureChild child:children) {
         if (child.hasScenario()){
@@ -34,16 +41,16 @@ public class BuildFeatures {
       return newChildren;
     }
 
-
     return children;
   }
 
-
-  public  Messages.Feature buildFeatures(Messages.Wrapper wrapper, Map<String, Messages.Feature> extraFeatures) {
-    Messages.Feature.Builder builder =
-        wrapper.getGherkinDocument().getFeature().toBuilder();
+  /**
+   * Build a feature by combining all features that match to tags in the parent feature
+   */
+  public  Messages.Feature buildFeatures(Messages.Feature feature, Map<String, Messages.Feature> extraFeatures) {
+    Messages.Feature.Builder builder = feature.toBuilder();
     List<Messages.Tag> tags =
-        new ArrayList<>(wrapper.getGherkinDocument().getFeature().getTagsList());
+        new ArrayList<>(feature.getTagsList());
     //getLog().info("init " + tags);
 
     for (int i = 0; i < tags.size(); i++) {

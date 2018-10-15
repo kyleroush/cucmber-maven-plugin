@@ -14,17 +14,17 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 
 /**
- * Says "Hi" to the user.
+ * Generate feature files for more comprehensive and reusable files
+ *
+ * To debug and log getLog().info("value");
  */
-@Mojo( name = "sayhi")
-public class GreetingMojo extends AbstractMojo {
+@Mojo( name = "generate")
+public class CucumberMavenPlugin extends AbstractMojo {
 
     @Parameter
     File outputDirectory;
-
     @Parameter
     List<File> coreFeatureFiles;
-
     @Parameter
     List<File> extraFeatureFiles;
 
@@ -35,8 +35,14 @@ public class GreetingMojo extends AbstractMojo {
     @Inject
     BuildFeatures buildFeatures;
 
+    /**
+     * This is where the plugin starts.
+     *
+     * @throws MojoExecutionException
+     */
     public void execute() throws MojoExecutionException {
 
+        // create the out put directory
         if (!outputDirectory.exists()) {
             outputDirectory.mkdirs();
         }
@@ -44,29 +50,25 @@ public class GreetingMojo extends AbstractMojo {
         //map extraFeatureFiles
         Map<String, File> extraFiles = setUp.buildTagMap(extraFeatureFiles);
 
+        // convert the extraFiles to extraFeatures
         Map<String, Messages.Feature> extraFeatures = setUp.buildTagFeatureMap(extraFiles);
 
-        getLog().info(extraFeatures.keySet().toString());
-
-        // if given a directory search it
+        // collect all the core feature
         List<String> fileNames = setUp.buildFeatureList(coreFeatureFiles);
-        getLog().info(fileNames.toString());
 
         for (String name : fileNames) {
-            getLog().info("name "+name);
+            //parse the core feature
+            Wrapper wrapper = Gherkin.fromPaths(Collections.singletonList(name), false, true, false).get(0);
 
-            for (Wrapper wrapper : Gherkin.fromPaths(Collections.singletonList(name), false, true, false)) {
-                getLog().info("parsed");
+            // build the new feature
+            Messages.Feature feature = buildFeatures.buildFeatures(wrapper.getGherkinDocument().getFeature(), extraFeatures);
 
-                Messages.Feature feature = buildFeatures.buildFeatures(wrapper, extraFeatures);
+            // create new file in output dir
+            String uri = wrapper.getGherkinDocumentOrBuilder().getUri();
+            File newFile = new File(outputDirectory, uri.substring(uri.lastIndexOf('/')));
 
-                String uri = wrapper.getGherkinDocumentOrBuilder().getUri();
-                getLog().info(uri);
-                getLog().info(uri.substring(uri.lastIndexOf('/')));
-                File newFile = new File(outputDirectory, uri.substring(uri.lastIndexOf('/')));
-
-                writer.write(feature, newFile);
-            }
+            // write the new file
+            writer.write(feature, newFile);
         }
     }
 }

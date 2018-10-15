@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.util.List;
 import org.apache.maven.plugin.MojoExecutionException;
 
+/**
+ * Take a file and feature and write them out.
+ */
 public class Writer {
 
 
@@ -14,11 +17,11 @@ public class Writer {
     try(FileWriter fw = new FileWriter(newFile)) {
       fw.write(new Writer().writeFeature(feature));
     } catch (IOException e) {
-      throw new MojoExecutionException("Error creating file ", e);
+      throw new MojoExecutionException("Error writing file", e);
     }
   }
 
-  public String writeFeature(Messages.Feature feature) {
+  private String writeFeature(Messages.Feature feature) {
     String raw = "";
 
     for(Messages.Tag t :feature.getTagsList()){
@@ -29,7 +32,6 @@ public class Writer {
     raw+=feature.getKeyword() +": "+ feature.getName();
     raw+='\n';
     raw += '\n';
-
 
     for(Messages.FeatureChild child :feature.getChildrenList()) {
       raw += '\n';
@@ -92,11 +94,10 @@ public class Writer {
 
     }
 
-    //getLog().info(raw);
     return raw;
   }
 
-  public String writeSteps(String raw, List<Messages.Step> steps) {
+  private String writeSteps(String raw, List<Messages.Step> steps) {
     for(Messages.Step step :steps) {
       raw += "\t\t";
       raw += step.getKeyword()+step.getText();
@@ -115,12 +116,10 @@ public class Writer {
       }
     }
 
-
     return raw;
   }
 
-  public String writeTable(String raw, List<Messages.TableRow> example, String tabs) {
-
+  private String writeTable(String raw, List<Messages.TableRow> example, String tabs) {
 
     for(Messages.TableRow t: example){
       raw += tabs;
