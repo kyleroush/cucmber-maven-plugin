@@ -15,7 +15,7 @@ There are some examples of usage and the outputted files in the examples folder
 
 ```
   <plugin>
-    <groupId>kyle</groupId>
+    <groupId>com.kyleroush.plugin.cucumber.generator</groupId>
     <artifactId>cucumber-maven-plugin</artifactId>
     <configuration>
       <coreFeatureFiles>
@@ -38,7 +38,10 @@ There are some examples of usage and the outputted files in the examples folder
   </plugin>
 ```
 
+## Executions
+The plugins goals are:
 
+* `generate` The id of the goal that generates the combined features
 
 ## configuration
 
