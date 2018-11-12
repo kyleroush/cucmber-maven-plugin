@@ -1,4 +1,4 @@
-package com.kyleroush.plugin.cucumber.generator;
+package com.github.kyleroush;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -14,10 +14,6 @@ public class Steps {
 
   Collection<String> collection;
 
-  @Given("step 1")
-  public void step1() {
-
-  }
   @When("step 2")
   public void step2() {
 

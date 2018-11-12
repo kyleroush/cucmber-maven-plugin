@@ -1,4 +1,4 @@
-package com.kyleroush.plugin.cucumber.generator;
+package com.github.kyleroush;
 
 import io.cucumber.messages.Messages;
 import java.util.ArrayList;

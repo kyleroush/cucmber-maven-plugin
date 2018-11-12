@@ -1,4 +1,4 @@
-package com.kyleroush.plugin.cucumber.generator;
+package com.github.kyleroush;
 
 import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
