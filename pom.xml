@@ -10,6 +10,24 @@
     <module>example</module>
     <module>features</module>
   </modules>
+  
+  <distributionManagement>
+    <repository>
+      <id>circleci</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+    </repository>
+    <snapshotRepository>
+      <id>circleci</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
+
+  <scm>
+    <connection>scm:git:https://github.com/kyleroush/cucmber-maven-plugin.git</connection>
+    <url>http://github.com/kyleroush/cucmber-maven-plugin</url>
+    <developerConnection>scm:git:https://github.com/kyleroush/cucmber-maven-plugin.git</developerConnection>
+  </scm>
+
   <build>
     <plugins>
       <plugin>
