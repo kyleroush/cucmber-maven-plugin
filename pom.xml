@@ -28,11 +28,11 @@
   
   <distributionManagement>
     <repository>
-      <id>circleciDeploy</id>
+      <id>circleci</id>
       <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
     </repository>
     <snapshotRepository>
-      <id>circleciSnapshot</id>
+      <id>circleci</id>
       <url>https://oss.sonatype.org/content/repositories/snapshots</url>
     </snapshotRepository>
   </distributionManagement>
