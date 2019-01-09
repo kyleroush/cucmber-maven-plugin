@@ -9,14 +9,30 @@
     <module>example</module>
     <module>features</module>
   </modules>
+
+  <description>empower cucumber uses to have reuse across features</description>
+
+  <licenses>
+    <license>
+      <name>The Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <name>Kyle Roush</name>
+      <url>https://github.com/kyleroush</url>
+    </developer>
+  </developers>
   
   <distributionManagement>
     <repository>
-      <id>circleci</id>
+      <id>circleciDeploy</id>
       <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
     </repository>
     <snapshotRepository>
-      <id>circleci</id>
+      <id>circleciSnapshot</id>
       <url>https://oss.sonatype.org/content/repositories/snapshots</url>
     </snapshotRepository>
   </distributionManagement>
