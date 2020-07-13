@@ -65,7 +65,21 @@ public class CucumberMavenPlugin extends AbstractMojo {
 
             // create new file in output dir
             String uri = wrapper.getGherkinDocumentOrBuilder().getUri();
-            File newFile = new File(outputDirectory, uri.substring(uri.lastIndexOf('/')));
+
+            //System.out.println("uri: " + uri);
+            //System.out.println("coreFeatureFiles.get(0).getAbsolutePath(): " + coreFeatureFiles.get(0).getAbsolutePath());
+
+
+            String extension = uri.substring(0, uri.lastIndexOf('/')).replace(coreFeatureFiles.get(0).getAbsolutePath(), "");
+            File dir = outputDirectory;
+            for (String s : extension.split("/")) {
+
+                dir = new File(dir, s);
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
+            }
+            File newFile = new File(dir, uri.substring(uri.lastIndexOf('/')));
 
             // write the new file
             writer.write(feature, newFile);
