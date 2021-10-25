@@ -10,3 +10,4 @@ so what this does is given feature files it will check the tags on the feature a
 ## TODO 
 
 * make more configruation possible
+* include docemtation on the plugin to pull in other resource files and execution files
